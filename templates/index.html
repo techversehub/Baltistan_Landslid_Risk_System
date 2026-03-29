@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landslide Risk Prediction System - Baltistan Silicon Labs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="icon">🏔️</span>
+                <h1>Baltistan Landslide Risk System</h1>
+            </div>
+            <p>Advanced predictive analysis for real-world geological risks in Baltistan.</p>
+        </header>
+
+        <main>
+            <section class="prediction-form-card">
+                <h2>Predictive Analysis</h2>
+                <form action="/predict" method="post" class="model-form">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="rainfall">Rainfall (mm)</label>
+                            <input type="number" step="0.01" name="rainfall" placeholder="e.g. 200.0" value="{{ rainfall }}" required>
+                        </div>
+                        <div class="col">
+                            <label for="slope">Slope Angle (degrees)</label>
+                            <input type="number" step="0.01" name="slope" placeholder="e.g. 35.0" value="{{ slope }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="moisture">Soil Moisture (%)</label>
+                            <input type="number" step="0.01" name="moisture" placeholder="e.g. 45.5" value="{{ moisture }}" required>
+                        </div>
+                        <div class="col">
+                            <label for="elevation">Elevation (m)</label>
+                            <input type="number" step="0.01" name="elevation" placeholder="e.g. 2500" value="{{ elevation }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="veg_cover">Vegetation Cover (%)</label>
+                        <input type="number" step="0.01" name="veg_cover" placeholder="e.g. 30.0" value="{{ veg_cover }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="model_name">Predictive Model</label>
+                        <select name="model_name" required>
+                            <option value="logistic_regression">Logistic Regression (Classification)</option>
+                            <option value="decision_tree">Decision Tree (Tree Pattern)</option>
+                            <option value="linear_regression">Linear Regression (Risk Score)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="predict-btn">Generate Prediction</button>
+                    
+                </form>
+
+                {% if prediction_text %}
+                <div class="result-box {{ risk_class }}">
+                    <h3>Prediction Outcome</h3>
+                    <p class="prediction-text">{{ prediction_text }}</p>
+                    <div class="icon-indicator">
+                        {% if risk_class == 'high-risk' %}
+                        ⚠️
+                        {% else %}
+                        ✅
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </section>
+
+            <section class="info-sidebar">
+                <div class="info-card">
+                    <h3>Parameter Guide</h3>
+                    <ul>
+                        <li><strong>Rainfall:</strong> High rainfall is a primary trigger.</li>
+                        <li><strong>Slope:</strong> Steeper slopes (>30°) are more prone.</li>
+                        <li><strong>Elevation:</strong> Higher altitudes correlate with specific soil types.</li>
+                        <li><strong>Veg Cover:</strong> Dense vegetation binds the soil.</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card stats-card">
+                    <h3>Baltistan Regional Data</h3>
+                    <p>Analysis covers data points from Skardu, Ghanche, and Shigar valleys.</p>
+                    <div class="stat-item">
+                        <span class="label">Avg Elevation:</span>
+                        <span class="value">2,500m</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Baltistan Silicon Labs. Developed for Assignment Submission.</p>
+        </footer>
+    </div>
+</body>
+</html>
